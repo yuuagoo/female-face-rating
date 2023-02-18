@@ -21,7 +21,7 @@ def find_facial_landmark(file_name):
     rects = detector(gray, 1)
             
     # predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
-    landmark_file = open('../data/' + file_name + '.lardmark.txt','w')
+    landmark_file = open(file_name + '.lardmark.txt','w')
     for (i, rect) in enumerate(rects):
         shape = predictor(gray, rect)
         shape = face_utils.shape_to_np(shape)
@@ -29,6 +29,8 @@ def find_facial_landmark(file_name):
             cv2.circle(image, (x, y), 1, (0, 0, 255), -1)
             landmark_file.write(str(x) + ', ' + str(y) + ', ')
         landmark_file.write("\n")
+        # only use the first rect, otherwise it won't math the ranking records
+        break
     landmark_file.close()
     cv2.imshow("image", image)
     cv2.waitKey(3000)
@@ -73,6 +75,8 @@ def find_facial_landmarks(file_name):
     #    cv2.circle(image, (x, y), 1, (0, 0, 255), -1)
             landmark_file.write(str(x) + ', ' + str(y) + ', ')
         landmark_file.write("\n")
+        # !!! we just need the first rect for now, otherwise it won't math the ranking records
+        break
     landmark_file.close()
 
 
