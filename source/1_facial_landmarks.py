@@ -21,7 +21,7 @@ def find_facial_landmark(file_name):
     rects = detector(gray, 1)
             
     # predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
-    landmark_file = open(file_name + '.mark.txt','w')
+    landmark_file = open('../data/' + file_name + '.lardmark.txt','w')
     for (i, rect) in enumerate(rects):
         shape = predictor(gray, rect)
         shape = face_utils.shape_to_np(shape)
