@@ -7,7 +7,10 @@ from sklearn import linear_model
 from sklearn.ensemble import RandomForestRegressor
 from sklearn import svm
 from sklearn import gaussian_process
-from sklearn.externals import joblib
+try:
+    from sklearn.externals import joblib
+except ImportError:
+    import joblib
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-model', type=str, default='linear_model')
@@ -47,12 +50,12 @@ regr.fit(features_train, ratings_train)
 
 joblib.dump(regr, '../model/face_model.pkl',compress=1) 
 ratings_predict = regr.predict(features_test)
-print "Model is trained Successfully!"
+print("Model is trained Successfully!")
 
 corr = np.corrcoef(ratings_predict, ratings_test)[0, 1]
-print 'Correlation:', corr
+print('Correlation:', corr)
 residue = np.mean((ratings_predict - ratings_test) ** 2)
-print 'Residue:', residue
+print('Residue:', residue)
 truth, = plt.plot(ratings_test, 'r')
 prediction, = plt.plot(ratings_predict, 'b')
 plt.legend([truth, prediction], ["Ground Truth", "Prediction"])
